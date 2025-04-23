@@ -134,13 +134,17 @@ class SampleGeneratorFace(SampleGeneratorBase):
                 ct_sample = None
                 if ct_samples is not None:
                     ct_sample = ct_samples[ct_indexes[n_batch]]
-
+                
                 try:
-                    
                     output_samples, random_flip = SampleProcessor.process ([sample], self.sample_process_options, self.output_sample_types, self.debug, ct_sample=ct_sample)
-                except:
-                    raise Exception ("Exception occured in sample %s. Error: %s" % (sample.filename, traceback.format_exc() ) )
-
+                
+                
+                except Exception as e:
+                      print(f"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                      print(f"WARNING: Skipping sample {sample.filename} due to an error during processing.")
+                      print(f"Error details: {e}")
+                      print(f"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                      continue
                 if batches is None:
                     batches = [ [] for _ in range(len(output_samples[0])) ]
 
