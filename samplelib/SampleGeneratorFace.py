@@ -137,14 +137,9 @@ class SampleGeneratorFace(SampleGeneratorBase):
                 
                 try:
                     output_samples, random_flip = SampleProcessor.process ([sample], self.sample_process_options, self.output_sample_types, self.debug, ct_sample=ct_sample)
-                
-                
-                except Exception as e:
-                      print(f"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-                      print(f"WARNING: Skipping sample {sample.filename} due to an error during processing.")
-                      print(f"Error details: {e}")
-                      print(f"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-                      continue
+                       
+                except:
+                    raise Exception ("Exception occured in sample %s. Error: %s" % (sample.filename, traceback.format_exc() ) )
                 if batches is None:
                     batches = [ [] for _ in range(len(output_samples[0])) ]
 
